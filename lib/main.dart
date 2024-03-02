@@ -20,9 +20,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       theme: CustomThemes.lightTheme,
-      home: Scaffold(
-        body: AuthScreen(),
-      ),
+      home: const AuthScreen(),
     );
   }
 }

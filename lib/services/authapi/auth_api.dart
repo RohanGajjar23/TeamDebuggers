@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
@@ -8,6 +9,7 @@ import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class AuthApi {
   static final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  static final FirebaseFirestore firestore = FirebaseFirestore.instance;
   static Future<UserCredential?> signInWithGoogle() async {
     final GoogleSignIn googleSignIn = GoogleSignIn();
     try {
@@ -41,7 +43,7 @@ class AuthApi {
     try {
       await googleSignIn.signOut();
       await FirebaseAuth.instance.signOut();
-      await Future.delayed(Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 2));
 
       log("Logout Successfully");
     } catch (e) {
@@ -148,8 +150,8 @@ class AuthApi {
   static Future<UserCredential?> signInWithGitHub() async {
     const String clientId = 'YOUR_GITHUB_CLIENT_ID';
     const String clientSecret = 'YOUR_GITHUB_CLIENT_SECRET';
-    final Uri githubUrl = Uri.parse(
-        'https://github.com/login/oauth/authorize?client_id=$clientId&scope=read:user user:email');
+    // final Uri githubUrl = Uri.parse(
+    //     'https://github.com/login/oauth/authorize?client_id=$clientId&scope=read:user user:email');
     final http.Response response = await http.post(
       Uri.parse('https://github.com/login/oauth/access_token'),
       headers: <String, String>{
