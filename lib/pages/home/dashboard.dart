@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 import 'package:google_fonts/google_fonts.dart';
@@ -22,7 +21,7 @@ class _DashBoardState extends State<DashBoard> {
             automaticallyImplyLeading: false,
             backgroundColor: Get.theme.colorScheme.background,
             title: Text(
-              "Search",
+              "Eventify",
               style: GoogleFonts.varelaRound(
                 textStyle: TextStyle(
                   color: Get.theme.colorScheme.tertiary,

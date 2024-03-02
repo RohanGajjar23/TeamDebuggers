@@ -1,7 +1,7 @@
-import 'package:eventapp/pages/home/widgets/google_github_wiget.dart';
-import 'package:eventapp/pages/home/widgets/profile_update_widget.dart';
+import 'package:eventapp/pages/auth/widgets/google_github_wiget.dart';
+import 'package:eventapp/pages/auth/widgets/profile_update_widget.dart';
 import 'package:eventapp/controller/auth_screen_controller.dart';
-import 'package:eventapp/pages/home/widgets/wallet_connect_widget.dart';
+import 'package:eventapp/pages/auth/widgets/wallet_connect_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
