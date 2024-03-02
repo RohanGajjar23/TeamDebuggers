@@ -6,7 +6,9 @@ class TextFieldDeco extends StatelessWidget {
   static InputDecoration decoration(String hintText) {
     return InputDecoration(
         hintText: hintText,
+        
         focusedBorder: OutlineInputBorder(
+          
             borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide(color: Colors.redAccent, width: 2)),
         enabledBorder: OutlineInputBorder(
