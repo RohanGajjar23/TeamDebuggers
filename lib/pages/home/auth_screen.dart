@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:eventapp/contoller/auth_screen_controller.dart';
+import 'package:eventapp/pages/home/widgets/TextInputdecoration.dart';
 import 'package:eventapp/services/authapi/auth_api.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,9 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
+  final scrollController = ScrollController();
   final AuthScreenController controller = Get.put(AuthScreenController());
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -53,6 +56,7 @@ class _AuthScreenState extends State<AuthScreen> {
               ),
             ),
             child: SingleChildScrollView(
+              controller: scrollController,
               physics: const NeverScrollableScrollPhysics(),
               child: Column(
                 // mainAxisAlignment: MainAxisAlignment.center,
@@ -92,9 +96,14 @@ class _AuthScreenState extends State<AuthScreen> {
                         InkWell(
                           onTap: () async {
                             UserCredential? user =
-                                await AuthApi.signInWithGoogle().then((value) {
-                                  
-                                },);
+                                await AuthApi.signInWithGoogle().then(
+                              (value) {
+                                scrollController.animateTo(
+                                    Get.size.longestSide / 1.25,
+                                    duration: const Duration(milliseconds: 500),
+                                    curve: Curves.decelerate);
+                              },
+                            );
                             if (user != null) {
                               log(await AuthApi.getUserName());
                               log(await AuthApi.getUserEmail());
@@ -184,6 +193,63 @@ class _AuthScreenState extends State<AuthScreen> {
                             ),
                           ),
                         ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: Get.size.longestSide / 7),
+                  Container(
+                    height: Get.size.longestSide / 1.25,
+                    width: Get.size.shortestSide / 1.2,
+                    decoration: BoxDecoration(
+                      border: Border.all(width: .4, color: Colors.white),
+                      color: Get.theme.colorScheme.tertiary.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Column(
+                      children: [
+                        SizedBox(height: Get.size.longestSide / 18),
+                        Text(
+                          "Create your Profile",
+                          style: GoogleFonts.varelaRound(
+                              textStyle: TextStyle(
+                                  color: Get.theme.colorScheme.tertiary,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: Get.size.shortestSide / 18)),
+                        ),
+                        SizedBox(height: Get.size.longestSide / 25),
+                        Container(
+                          // height: Get.size.longestSide / 3,
+                          width: Get.size.shortestSide / 1.7,
+                          decoration: BoxDecoration(
+                            color: Get.theme.colorScheme.onPrimary,
+                            borderRadius: BorderRadius.circular(11),
+                          ),
+                          // child: Image.asset(
+                          //   'assets/images/logo.png',
+                          //   // fit: BoxFit.cover,
+                          // ),
+                        ),
+                        SizedBox(height: Get.size.longestSide / 20),
+                        Container(
+                          height: Get.size.longestSide / 1.75,
+                          width: Get.size.longestSide / 3,
+                          // color: Colors.greenAccent,
+                          child: Column(
+                            children: [
+                              TextField(
+                                  decoration:
+                                      TextFieldDeco.decoration("Enter Name")),
+                              TextField(
+                                  decoration: TextFieldDeco.decoration("")),
+                              TextField(
+                                  decoration:
+                                      TextFieldDeco.decoration("Enter Name")),
+                              TextField(
+                                  decoration:
+                                      TextFieldDeco.decoration("Enter Name")),
+                            ],
+                          ),
+                        )
                       ],
                     ),
                   ),
