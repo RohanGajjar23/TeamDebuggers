@@ -1,8 +1,9 @@
 import 'dart:developer';
+import 'package:eventapp/pages/home/widgets/TextInputdecoration.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:eventapp/contoller/auth_screen_controller.dart';
-import 'package:eventapp/pages/home/widgets/TextInputdecoration.dart';
+import 'package:eventapp/pages/home/components/msg_box.dart';
 import 'package:eventapp/services/authapi/auth_api.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -110,12 +111,7 @@ class _AuthScreenState extends State<AuthScreen> {
                           onTap: () async {
                             UserCredential? user =
                                 await AuthApi.signInWithGoogle().then(
-                              (value) {
-                                scrollController.animateTo(
-                                    Get.size.longestSide / 1.25,
-                                    duration: const Duration(milliseconds: 500),
-                                    curve: Curves.decelerate);
-                              },
+                              (value) {},
                             );
                             if (user != null) {
                               log(await AuthApi.getUserName());
@@ -317,7 +313,7 @@ class _AuthScreenState extends State<AuthScreen> {
               ),
             ),
           ),
-        )
+        ),
       ],
     );
   }
