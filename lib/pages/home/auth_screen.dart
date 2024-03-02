@@ -53,7 +53,7 @@ class _AuthScreenState extends State<AuthScreen> {
               ),
             ),
             child: SingleChildScrollView(
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               child: Column(
                 // mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -92,7 +92,9 @@ class _AuthScreenState extends State<AuthScreen> {
                         InkWell(
                           onTap: () async {
                             UserCredential? user =
-                                await AuthApi.signInWithGoogle();
+                                await AuthApi.signInWithGoogle().then((value) {
+                                  
+                                },);
                             if (user != null) {
                               log(await AuthApi.getUserName());
                               log(await AuthApi.getUserEmail());
