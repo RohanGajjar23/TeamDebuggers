@@ -102,13 +102,14 @@ class _DashBoardState extends State<DashBoard> {
                     GButton(
                         icon: Icons.favorite,
                         iconColor: Theme.of(context).colorScheme.tertiary,
-                        text: 'Likes',
+                        text: 'Favourites',
                         textStyle: GoogleFonts.varelaRound(
                             textStyle: TextStyle(
                           letterSpacing: 1,
                           color: Theme.of(context).colorScheme.primaryContainer,
                         ))),
                     GButton(
+                        // onPressed: ,
                         icon: Icons.search,
                         iconColor: Theme.of(context).colorScheme.tertiary,
                         text: 'Search',
