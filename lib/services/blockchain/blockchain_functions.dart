@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:eventapp/model/event_model.dart';
+import 'package:eventapp/model/user_data.dart';
+import 'package:eventapp/services/authapi/auth_api.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart';
 import 'package:web3dart/web3dart.dart';
@@ -13,11 +15,23 @@ class BlockChain {
 
   // var myData;
 
-  final myAddress = "0xd9B19f4D1d5E0A7F9c0F1D8165225683821C47d2";
   final recipientAddress = "0x036799E6F0E945007896486E8BC6c226cad2c25d";
   final contractAddress = "0x2475a97B4f09d6802548FA32aBebF73c5e2Af9E2";
-  final privateKey =
-      "b2322273918035261d18717dc29b6c8bf0e50cc415ff8823c30f32910a4eb3cf";
+
+  var myAddress = "";
+  var privateKey = "";
+
+  Future<void> getKeys() async {
+    final value = await AuthApi.firestore
+        .collection("users")
+        .doc(AuthApi.firebaseAuth.currentUser!.uid)
+        .get();
+    if (value.data() != null) {
+      final data = UserData.fromMap(value.data()!);
+      privateKey = data.privateId;
+      myAddress = data.publicId;
+    }
+  }
 
   void initBlockChain() {
     httpClient = Client();
@@ -25,6 +39,7 @@ class BlockChain {
         "https://sepolia.infura.io/v3/f7971deecbb34099b6e3b9b65c5e50f0",
         httpClient);
     log("I got http and eth");
+    getKeys();
   }
 
   Future<void> createEventFirebase(EventModel event) async {

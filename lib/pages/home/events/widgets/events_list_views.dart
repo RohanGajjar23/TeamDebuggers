@@ -21,8 +21,12 @@ class _EventsListViewsState extends State<EventsListViews>
       height: Get.size.height / 3.5,
       child: AnimationLimiter(
         child: widget.events.isEmpty
-            ? const Center(
-                child: Text("No Events Right now!"),
+            ? Center(
+                child: Text("No Events Right now!",
+                    style: Get.theme.textTheme.bodyLarge!.copyWith(
+                        color: Get.theme.colorScheme.tertiary,
+                        fontSize: Get.size.shortestSide / 20,
+                        fontWeight: FontWeight.w200)),
               )
             : ListView.builder(
                 cacheExtent: 0,
