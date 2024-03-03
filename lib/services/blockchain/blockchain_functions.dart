@@ -11,7 +11,7 @@ class BlockChain {
   bool data = false;
   int myAmount = 0;
 
-  var myData;
+  // var myData;
 
   final myAddress = "0xd9B19f4D1d5E0A7F9c0F1D8165225683821C47d2";
   final recipientAddress = "0x036799E6F0E945007896486E8BC6c226cad2c25d";
@@ -23,7 +23,7 @@ class BlockChain {
     httpClient = Client();
     ethClient = Web3Client(
         "https://sepolia.infura.io/v3/f7971deecbb34099b6e3b9b65c5e50f0",
-        httpClient!);
+        httpClient);
     log("I got http and eth");
   }
 
@@ -52,8 +52,7 @@ class BlockChain {
       params: [BigInt.from(eventId)],
     );
 
-    print(
-        "Event Details: ${result[0]}, Date: ${result[1]}, Ticket Price: ${result[2]}, Total Tickets: ${result[3]},Total Tickets Sold: ${result[4]}");
+    log("Event Details: ${result[0]}, Date: ${result[1]}, Ticket Price: ${result[2]}, Total Tickets: ${result[3]},Total Tickets Sold: ${result[4]}");
   }
 
   Future<void> purchaseTicket(int eventId, int quantity) async {

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:eventapp/controller/auth_screen_controller.dart';
 import 'package:eventapp/model/user_data.dart';
 import 'package:eventapp/pages/auth/auth_screen.dart';
@@ -14,6 +12,7 @@ class IndexPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: unused_local_variable
     final controller = Get.put(AuthScreenController());
 
     return StreamBuilder<User?>(
