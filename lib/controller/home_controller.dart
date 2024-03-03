@@ -11,8 +11,7 @@ import 'package:get/get.dart';
 class HomeController extends GetxController {
   var selectedPage = (0).obs;
   var isLoading = false.obs;
-  var privateKey = "".obs;
-  var publicId = "".obs;
+
   final List<Widget> pages = ([
     const Events(),
     const OrganizeEvents(),
