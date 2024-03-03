@@ -23,7 +23,7 @@ class BlockChain {
 
   Future<void> getKeys() async {
     final value = await AuthApi.firestore
-        .collection("users")
+        .collection("userData")
         .doc(AuthApi.firebaseAuth.currentUser!.uid)
         .get();
     if (value.data() != null) {
