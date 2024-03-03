@@ -28,6 +28,7 @@ Android device running Android 8.0 or above (11+ recommended).
 <img src="signin.jpeg">
 <img src="createEvent.jpeg">
 <img src="eventDetails.jpeg">
+<img src="user.jpeg">
 
 ## Installation
 
