@@ -28,6 +28,8 @@ class BlockChain {
         .get();
     if (value.data() != null) {
       final data = UserData.fromMap(value.data()!);
+      log(data.privateId);
+      log(data.publicId);
       privateKey = data.privateId;
       myAddress = data.publicId;
     }
