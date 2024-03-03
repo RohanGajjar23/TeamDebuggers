@@ -22,6 +22,10 @@ This repository contains an event management application named EVENTIFY that lev
 ## System Requirements
 
 Android device running Android 8.0 or above (11+ recommended).
+
+## Screenshots
+
+<img src="signin.jpeg">
 ## Installation
 
 Download the latest APK from the Releases page and install it. Eventify will download and install the latest APK for you as part of the setup process.
