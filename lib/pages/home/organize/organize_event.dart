@@ -3,14 +3,14 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eventapp/controller/home_controller.dart';
 import 'package:eventapp/model/event_model.dart';
-import 'package:eventapp/pages/auth/widgets/TextInputdecoration.dart';
+import 'package:eventapp/pages/auth/widgets/text_input_deco.dart';
 import 'package:eventapp/services/authapi/auth_api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 
 class OrganizeEvents extends StatefulWidget {
-  OrganizeEvents({super.key});
+  const OrganizeEvents({super.key});
 
   @override
   State<OrganizeEvents> createState() => _OrganizeEventsState();
@@ -60,14 +60,14 @@ class _OrganizeEventsState extends State<OrganizeEvents> {
       barrierDismissible: true,
       selectableDayPredicate: (dateTime) => dateTime != DateTime(2023, 2, 25),
       theme: ThemeData.dark().copyWith(
-        textTheme: TextTheme(
+        textTheme: const TextTheme(
           // Define other text styles here as needed
-          bodyText1: TextStyle(color: Colors.white),
-          bodyText2: TextStyle(color: Colors.white),
+          bodyLarge: TextStyle(color: Colors.white),
+          bodyMedium: TextStyle(color: Colors.white),
           // You may want to customize other text styles like subtitle1, headline1, etc.
         ),
         // Ensure other components like buttons also match your theme
-        colorScheme: ColorScheme.dark(
+        colorScheme: const ColorScheme.dark(
           primary: Colors.deepPurple,
           onPrimary: Colors.white, // For text on buttons
         ),
@@ -105,12 +105,14 @@ class _OrganizeEventsState extends State<OrganizeEvents> {
     }
   }
 
-  Future<void> CreateEvent() async {
+  Future<void> createEvent() async {
     QuerySnapshot querySnapshot =
         await FirebaseFirestore.instance.collection('Events').get();
     int collectionLength = querySnapshot.docs.length;
-    Map<String, int>? dateRangeInMilliseconds =
-        await getDateTimeRangeInMilliseconds(context);
+    Map<String, int>? dateRangeInMilliseconds;
+    if (mounted) {
+      dateRangeInMilliseconds = await getDateTimeRangeInMilliseconds(context);
+    }
     String userName = await AuthApi.getUserName();
     try {
       EventModel eventModel = EventModel(
@@ -151,7 +153,7 @@ class _OrganizeEventsState extends State<OrganizeEvents> {
             // color: Colors.greenAccent,
             child: SingleChildScrollView(
               child: Padding(
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   child: Column(children: [
                     Text(
                       "Create your Event",
@@ -178,28 +180,22 @@ class _OrganizeEventsState extends State<OrganizeEvents> {
                     Row(
                       children: [
                         Expanded(
-                          child: Container(
-                            // color: Colors.green,
-                            child: TextField(
-                              style: Get.theme.textTheme.bodyLarge!
-                                  .copyWith(color: Colors.white),
-                              controller: locationController,
-                              keyboardType: TextInputType.streetAddress,
-                              decoration: TextFieldDeco.decoration("Location"),
-                            ),
+                          child: TextField(
+                            style: Get.theme.textTheme.bodyLarge!
+                                .copyWith(color: Colors.white),
+                            controller: locationController,
+                            keyboardType: TextInputType.streetAddress,
+                            decoration: TextFieldDeco.decoration("Location"),
                           ),
                         ),
                         SizedBox(
                           width: Get.size.shortestSide / 50,
                         ),
                         Expanded(
-                          child: Container(
-                            // color: Colors.red,
-                            child: TextField(
-                              style: Get.theme.textTheme.bodyLarge!
-                                  .copyWith(color: Colors.white),
-                              decoration: TextFieldDeco.decoration("Image"),
-                            ),
+                          child: TextField(
+                            style: Get.theme.textTheme.bodyLarge!
+                                .copyWith(color: Colors.white),
+                            decoration: TextFieldDeco.decoration("Image"),
                           ),
                         )
                       ],
@@ -208,25 +204,20 @@ class _OrganizeEventsState extends State<OrganizeEvents> {
                     Row(
                       children: [
                         Expanded(
-                          child: Container(
-                              // color: Colors.green,
-                              child: ElevatedButton(
+                          child: ElevatedButton(
                             onPressed: () async {
                               Map<String, int>? dateRangeInMilliseconds =
                                   await getDateTimeRangeInMilliseconds(context);
                               if (dateRangeInMilliseconds != null) {
-                                print(
-                                    "Start Date in Milliseconds: ${dateRangeInMilliseconds['start']}");
-                                print(
-                                    "End Date in Milliseconds: ${dateRangeInMilliseconds['end']}");
+                                log("Start Date in Milliseconds: ${dateRangeInMilliseconds['start']}");
+                                log("End Date in Milliseconds: ${dateRangeInMilliseconds['end']}");
                                 // Use the milliseconds as needed
                               } else {
-                                print(
-                                    "Date range selection was cancelled or invalid.");
+                                log("Date range selection was cancelled or invalid.");
                               }
                             },
                             child: const Text("Pick Start and End Date"),
-                          )),
+                          ),
                         ),
                       ],
                     ),
@@ -234,31 +225,25 @@ class _OrganizeEventsState extends State<OrganizeEvents> {
                     Row(
                       children: [
                         Expanded(
-                          child: Container(
-                            // color: Colors.green,
-                            child: TextField(
-                              style: Get.theme.textTheme.bodyLarge!
-                                  .copyWith(color: Colors.white),
-                              controller: totalTicketsController,
-                              keyboardType: TextInputType.number,
-                              decoration:
-                                  TextFieldDeco.decoration("Total Tickets"),
-                            ),
+                          child: TextField(
+                            style: Get.theme.textTheme.bodyLarge!
+                                .copyWith(color: Colors.white),
+                            controller: totalTicketsController,
+                            keyboardType: TextInputType.number,
+                            decoration:
+                                TextFieldDeco.decoration("Total Tickets"),
                           ),
                         ),
                         SizedBox(
                           width: Get.size.shortestSide / 50,
                         ),
                         Expanded(
-                          child: Container(
-                            // color: Colors.red,
-                            child: TextField(
-                              style: Get.theme.textTheme.bodyLarge!
-                                  .copyWith(color: Colors.white),
-                              controller: priceController,
-                              keyboardType: TextInputType.number,
-                              decoration: TextFieldDeco.decoration("Price"),
-                            ),
+                          child: TextField(
+                            style: Get.theme.textTheme.bodyLarge!
+                                .copyWith(color: Colors.white),
+                            controller: priceController,
+                            keyboardType: TextInputType.number,
+                            decoration: TextFieldDeco.decoration("Price"),
                           ),
                         )
                       ],
@@ -266,14 +251,7 @@ class _OrganizeEventsState extends State<OrganizeEvents> {
                     SizedBox(height: Get.size.longestSide / 20),
                     ElevatedButton(
                       onPressed: () {
-                        CreateEvent();
-                        // final isValid = formKey.currentState!.validate();
-                        // if (!isValid) {
-                        //   return;
-                        // }
-                        // FocusScope.of(Get.context!).unfocus();
-                        // formKey.currentState!.save();
-                        // controller.updateProfile();
+                        createEvent();
                       },
                       style: ElevatedButton.styleFrom(
                         elevation: 10,

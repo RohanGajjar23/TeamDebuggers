@@ -40,27 +40,7 @@ class CustomBottomBar extends StatelessWidget {
                 GButton(
                     icon: Icons.event_note_outlined,
                     iconColor: Get.theme.colorScheme.tertiary,
-                    text: 'Favourites',
-                    textStyle: GoogleFonts.varelaRound(
-                        textStyle: TextStyle(
-                      letterSpacing: 1,
-                      color: Get.theme.colorScheme.primaryContainer,
-                    ))),
-                GButton(
-                    // onPressed: ,
-                    icon: Icons.handshake_outlined,
-                    iconColor: Get.theme.colorScheme.tertiary,
-                    text: 'Community',
-                    textStyle: GoogleFonts.varelaRound(
-                        textStyle: TextStyle(
-                      letterSpacing: 1,
-                      color: Get.theme.colorScheme.primaryContainer,
-                    ))),
-                GButton(
-                    // onPressed: ,
-                    icon: Icons.search,
-                    iconColor: Get.theme.colorScheme.tertiary,
-                    text: 'Search',
+                    text: 'Organize',
                     textStyle: GoogleFonts.varelaRound(
                         textStyle: TextStyle(
                       letterSpacing: 1,

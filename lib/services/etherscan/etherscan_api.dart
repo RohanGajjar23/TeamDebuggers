@@ -5,11 +5,11 @@ import 'package:http/http.dart' as http;
 class EtherScanApi {
   static Future<Map<String, dynamic>> getTransactionReceiptStatus(
       String txHash) async {
-    const _apikey = "9Z74NA3QKCFX8EPGT8FHKUS98X2E3WN23E";
+    const apikey = "9Z74NA3QKCFX8EPGT8FHKUS98X2E3WN23E";
 
     const baseUrl = 'https://api.etherscan.io/api';
     final url = Uri.parse(
-        '$baseUrl?module=transaction&action=gettxreceiptstatus&txhash=$txHash&apikey=$_apikey');
+        '$baseUrl?module=transaction&action=gettxreceiptstatus&txhash=$txHash&apikey=$apikey');
     final response = await http.get(url);
     try {
       if (response.statusCode == 200) {

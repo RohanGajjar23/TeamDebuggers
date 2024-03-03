@@ -35,11 +35,15 @@ class EventModel {
       required this.eventType});
 
   static Future<void> storeEventData(EventModel event) async {
+    QuerySnapshot querySnapshot =
+        await FirebaseFirestore.instance.collection('Events').get();
+    int collectionLength = querySnapshot.docs.length;
     var eventDoc = FirebaseFirestore.instance
         .collection('Events')
         .doc(event.id.toString());
     await eventDoc.set({
       'name': event.name,
+      'id': collectionLength,
       'description': event.description,
       'price': event.price,
       'startDate': event.startDate,
@@ -58,7 +62,7 @@ class EventModel {
   EventModel.fromMap(Map<String, dynamic> map) {
     name = map['name'];
     description = map['description'];
-    price = map['price'];
+    price = map['price'].abs().toDouble();
     startDate = map['startDate'];
     endDate = map['endDate'];
     location = map['location'];
@@ -70,7 +74,7 @@ class EventModel {
             : Status.ended;
     totalTickets = map['totalTickets'];
     photoUrl = map['photoUrl'];
-    id = map['id'];
+    id = map['id'] ?? 0;
     organizer = map['organizer'];
     eventType = map['eventType'] == "technical"
         ? EventType.technical
@@ -98,62 +102,3 @@ class EventModel {
     };
   }
 }
-
-final dummy = [
-  EventModel(
-      name: "Ingenium",
-      description: "description",
-      price: 200,
-      location: "Ahmedabad",
-      ticketSold: 5,
-      status: Status.upcoming,
-      totalTickets: 100,
-      photoUrl: "photoUrl",
-      id: 0,
-      startDate: DateTime.now().millisecondsSinceEpoch + 1000000,
-      endDate: DateTime.now().millisecondsSinceEpoch + 2000000,
-      organizer: '2342343243',
-      eventType: EventType.technical),
-  EventModel(
-      name: "Ingenium2",
-      description: "description",
-      price: 200,
-      location: "Vadodara",
-      ticketSold: 200,
-      status: Status.active,
-      totalTickets: 250,
-      photoUrl: "photoUrl2",
-      id: 2391203912390,
-      startDate: DateTime.now().millisecondsSinceEpoch + 1000000,
-      endDate: DateTime.now().millisecondsSinceEpoch + 2000000,
-      organizer: '2342343243',
-      eventType: EventType.sports),
-  EventModel(
-      name: "Ingenium2",
-      description: "description",
-      price: 200,
-      startDate: DateTime.now().millisecondsSinceEpoch + 1000000,
-      endDate: DateTime.now().millisecondsSinceEpoch + 2000000,
-      location: "Vadodara",
-      ticketSold: 200,
-      status: Status.active,
-      totalTickets: 250,
-      photoUrl: "photoUrl2",
-      id: 2391203912390,
-      organizer: '2342343243',
-      eventType: EventType.sports),
-  EventModel(
-      name: "Ingenium2",
-      description: "description",
-      price: 200,
-      startDate: DateTime.now().millisecondsSinceEpoch + 1000000,
-      endDate: DateTime.now().millisecondsSinceEpoch + 2000000,
-      location: "Vadodara",
-      ticketSold: 200,
-      status: Status.active,
-      totalTickets: 250,
-      photoUrl: "photoUrl2",
-      id: 2391203912390,
-      organizer: '2342343243',
-      eventType: EventType.technical),
-];

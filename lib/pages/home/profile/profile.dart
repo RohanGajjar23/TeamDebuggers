@@ -1,12 +1,9 @@
 import 'package:eventapp/controller/home_controller.dart';
-import 'package:eventapp/services/authapi/auth_api.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 class Profile extends StatefulWidget {
-  Profile({super.key});
+  const Profile({super.key});
 
   @override
   State<Profile> createState() => _ProfileState();
@@ -50,7 +47,7 @@ class _ProfileState extends State<Profile> {
                     children: [
                       // SizedBox(height: Get.size.longestSide / 30),
                       Padding(
-                        padding: EdgeInsets.all(15),
+                        padding: const EdgeInsets.all(15),
                         child: Container(
                           alignment: Alignment.center,
                           // height: Get.size.longestSide / 1.5,
@@ -64,7 +61,7 @@ class _ProfileState extends State<Profile> {
                               Container(
                                 height: Get.size.longestSide / 6,
                                 width: Get.size.shortestSide / 1.9,
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(1000)),
                                   // color: Colors.white,
@@ -106,28 +103,25 @@ class _ProfileState extends State<Profile> {
                               SizedBox(
                                 height: Get.size.longestSide / 70,
                               ),
-                              Container(
-                                // color: Colors.amber,
-                                child: ListTile(
-                                  title: Container(),
-                                  subtitle: Padding(
-                                    padding: EdgeInsets.only(bottom: 4.64),
-                                    child: Text(
-                                      "16-11-2003",
-                                      style: TextStyle(
-                                        color: Get.theme.colorScheme.tertiary,
-                                        fontSize: Get.size.longestSide / 48,
-                                      ),
-                                    ),
-                                  ),
-                                  leading: Text(
-                                    "Birth Date :",
+                              ListTile(
+                                title: Container(),
+                                subtitle: Padding(
+                                  padding: const EdgeInsets.only(bottom: 4.64),
+                                  child: Text(
+                                    "16-11-2003",
                                     style: TextStyle(
                                       color: Get.theme.colorScheme.tertiary,
                                       fontSize: Get.size.longestSide / 48,
                                     ),
-                                  ), // You can replace this with an appropriate icon
+                                  ),
                                 ),
+                                leading: Text(
+                                  "Birth Date :",
+                                  style: TextStyle(
+                                    color: Get.theme.colorScheme.tertiary,
+                                    fontSize: Get.size.longestSide / 48,
+                                  ),
+                                ), // You can replace this with an appropriate icon
                               ),
                               SizedBox(
                                 height: Get.size.longestSide / 70,
@@ -135,7 +129,7 @@ class _ProfileState extends State<Profile> {
                               ListTile(
                                 title: Container(),
                                 subtitle: Text(
-                                  "${controller.blockChain.myAddress}",
+                                  controller.blockChain.myAddress,
                                   style: TextStyle(
                                     color: Get.theme.colorScheme.tertiary,
                                     fontSize: Get.size.longestSide / 48,

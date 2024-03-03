@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 // ignore: must_be_immutable
 class MsgBox extends StatelessWidget {
-  MsgBox({
+  const MsgBox({
     super.key,
   });
 
@@ -24,7 +23,7 @@ class MsgBox extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
               color: Get.theme.colorScheme.background),
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             width: size.width / 1.13,
             height: size.height / 17,
             child: Row(

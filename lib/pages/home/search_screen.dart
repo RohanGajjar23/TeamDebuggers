@@ -79,14 +79,14 @@ class _SearchPageState extends State<SearchPage> {
           bottomNavigationBar: Container(
             color: Theme.of(context).colorScheme.secondary.withOpacity(.87),
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 13, vertical: 7),
+              padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 7),
               child: GNav(
                   backgroundColor:
                       Theme.of(context).colorScheme.secondary.withOpacity(0.1),
                   activeColor: Theme.of(context).colorScheme.primaryContainer,
                   tabBackgroundColor: Theme.of(context).colorScheme.background,
                   gap: 5,
-                  padding: EdgeInsets.all(13),
+                  padding: const EdgeInsets.all(13),
                   tabs: [
                     GButton(
                         icon: Icons.home,

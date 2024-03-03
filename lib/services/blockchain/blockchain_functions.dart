@@ -55,7 +55,7 @@ class BlockChain {
     log("Event Details: ${result[0]}, Date: ${result[1]}, Ticket Price: ${result[2]}, Total Tickets: ${result[3]},Total Tickets Sold: ${result[4]}");
   }
 
-  Future<void> purchaseTicket(int eventId, int quantity) async {
+  Future<String> purchaseTicket(int eventId, int quantity) async {
     final contract = await loadEventTicketingContract();
     final purchaseTicketFunction = contract.function('purchaseTicket');
 
@@ -74,6 +74,7 @@ class BlockChain {
       fetchChainIdFromNetworkId: true,
     );
     log("Transaction : $result");
+    return result;
   }
 
   Future<void> createAndVerifyEvent(

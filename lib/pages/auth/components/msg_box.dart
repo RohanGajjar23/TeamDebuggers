@@ -23,7 +23,7 @@ class MsgBox extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
               color: Get.theme.colorScheme.background),
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             width: size.width / 1.13,
             height: size.height / 17,
             child: Row(

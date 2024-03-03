@@ -1,4 +1,5 @@
 import 'package:eventapp/pages/home/components/custom_bottom_bar.dart';
+import 'package:eventapp/services/authapi/auth_api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -25,8 +26,18 @@ class _DashBoardState extends State<DashBoard> {
             return Scaffold(
               appBar: AppBar(
                 actions: [
-                  // IconbU(Icons.output_sharp)
-                  // o
+                  IconButton(
+                      onPressed: () {
+                        AuthApi.signOutGoogle();
+                        AuthApi.signOut();
+                        Get.offUntil(
+                            GetPageRoute(
+                                page: () => const DashBoard(),
+                                transition: Transition.rightToLeftWithFade),
+                            (route) => false);
+                        return;
+                      },
+                      icon: const Icon(Icons.logout))
                 ],
                 centerTitle: true,
                 automaticallyImplyLeading: false,
