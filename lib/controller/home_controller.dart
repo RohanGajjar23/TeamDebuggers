@@ -17,7 +17,7 @@ class HomeController extends GetxController {
     const OrganizeEvents(),
     const CommunityConnect(),
     const SearchEvents(),
-    const Profile(),
+    Profile(),
   ]);
   final BlockChain blockChain = BlockChain();
 
