@@ -77,8 +77,13 @@ class BlockChain {
     log("Transaction : $result");
   }
 
-  Future<void> createAndVerifyEvent(String name, String date,
-      double ticketPrice, int totalTickets, Status currentStatus) async {
+  Future<void> createAndVerifyEvent(
+      String name,
+      String date,
+      double ticketPrice,
+      int totalTickets,
+      Status currentStatus,
+      EventModel event) async {
     final contract = await loadEventTicketingContract();
     final createEventFunction = contract.function('createEvent');
     final priceInWei = BigInt.from(ticketPrice * 1e18);
@@ -103,10 +108,8 @@ class BlockChain {
       fetchChainIdFromNetworkId: true,
     );
     log("Transaction : $result");
-    await createEventFirebase(dummy[0]);
-    // Implement a delay or polling mechanism here to wait for the transaction to be mined
-    await Future.delayed(const Duration(
-        seconds: 15)); // Example delay - adjust based on expected block times
+    await createEventFirebase(event);
+    await Future.delayed(const Duration(seconds: 20));
     final currentEventId = (await ethClient.call(
         contract: contract,
         function: contract.function('nextEventId'),

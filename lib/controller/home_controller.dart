@@ -12,7 +12,7 @@ class HomeController extends GetxController {
   var selectedPage = (0).obs;
   final List<Widget> pages = ([
     const Events(),
-    const OrganizeEvents(),
+    OrganizeEvents(),
     const CommunityConnect(),
     const SearchEvents(),
     const Profile(),

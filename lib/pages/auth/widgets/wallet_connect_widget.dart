@@ -61,9 +61,11 @@ class _WalletConnectWidgetState extends State<WalletConnectWidget> {
                               },
                               obscureText: controller.showPubKey.value,
                               controller: controller.pubEditingController.value,
+                              style: Get.theme.textTheme.bodyLarge!
+                                  .copyWith(color: Colors.white),
                               decoration: TextFieldDeco.decoration(
-                                      "Enter Your Public Key")
-                                  .copyWith(
+                                "Enter Your Public Key",
+                              ).copyWith(
                                 suffixIcon: IconButton(
                                   onPressed: () {
                                     controller.showPubKey(
@@ -86,6 +88,8 @@ class _WalletConnectWidgetState extends State<WalletConnectWidget> {
                                 return null;
                               },
                               obscureText: controller.showPriKey.value,
+                              style: Get.theme.textTheme.bodyLarge!
+                                  .copyWith(color: Colors.white),
                               decoration: TextFieldDeco.decoration(
                                       "Enter Your Private Key")
                                   .copyWith(

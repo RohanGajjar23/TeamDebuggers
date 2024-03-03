@@ -7,7 +7,7 @@ enum EventType { technical, cultural, sports }
 class EventModel {
   late String name;
   late String description;
-  late int price;
+  late double price;
   late int startDate;
   late int endDate;
   late String location;

@@ -24,6 +24,10 @@ class _DashBoardState extends State<DashBoard> {
           builder: (context) {
             return Scaffold(
               appBar: AppBar(
+                actions: [
+                  // IconbU(Icons.output_sharp)
+                  // o
+                ],
                 centerTitle: true,
                 automaticallyImplyLeading: false,
                 backgroundColor: Get.theme.colorScheme.background,

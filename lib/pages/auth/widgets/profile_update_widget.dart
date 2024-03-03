@@ -63,6 +63,8 @@ class _ProfileUpdateWidgetState extends State<ProfileUpdateWidget> {
                               },
                               controller:
                                   controller.nameEditingController.value,
+                              style: Get.theme.textTheme.bodyLarge!
+                                  .copyWith(color: Colors.white),
                               decoration:
                                   TextFieldDeco.decoration("Enter Name"),
                             ),
@@ -76,6 +78,8 @@ class _ProfileUpdateWidgetState extends State<ProfileUpdateWidget> {
                                   }
                                   return null;
                                 },
+                                style: Get.theme.textTheme.bodyLarge!
+                                    .copyWith(color: Colors.white),
                                 decoration: InputDecoration(
                                   labelText: 'Select your birthdate',
                                   labelStyle: Get.theme.textTheme.bodyMedium!
@@ -95,7 +99,11 @@ class _ProfileUpdateWidgetState extends State<ProfileUpdateWidget> {
                                 Column(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    const Text('Organizer'),
+                                    Text(
+                                      'Organizer',
+                                      style: Get.theme.textTheme.bodyLarge!
+                                          .copyWith(color: Colors.white),
+                                    ),
                                     Radio<UserRole>(
                                       value: UserRole.organizer,
                                       groupValue: controller.selectedRole.value,
@@ -110,7 +118,11 @@ class _ProfileUpdateWidgetState extends State<ProfileUpdateWidget> {
                                 Column(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    const Text('User'),
+                                    Text(
+                                      'User',
+                                      style: Get.theme.textTheme.bodyLarge!
+                                          .copyWith(color: Colors.white),
+                                    ),
                                     Radio<UserRole>(
                                       value: UserRole.user,
                                       groupValue: controller.selectedRole.value,
@@ -123,7 +135,7 @@ class _ProfileUpdateWidgetState extends State<ProfileUpdateWidget> {
                                 ),
                               ],
                             ),
-                            SizedBox(height: Get.size.longestSide / 40),
+                            SizedBox(height: Get.size.longestSide / 80),
                             ElevatedButton(
                               onPressed: () {
                                 final isValid =
