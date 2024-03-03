@@ -15,7 +15,7 @@ class BlockChain {
 
   final myAddress = "0xd9B19f4D1d5E0A7F9c0F1D8165225683821C47d2";
   final recipientAddress = "0x036799E6F0E945007896486E8BC6c226cad2c25d";
-  final contractAddress = "0x2475a97B4f09d6802548FA32aBebF73c5e2Af9E2";
+  final contractAddress = "0x84E76543A462E361c785b3a96A36e6F1fFe6cDEB";
   final privateKey =
       "b2322273918035261d18717dc29b6c8bf0e50cc415ff8823c30f32910a4eb3cf";
 
@@ -108,6 +108,7 @@ class BlockChain {
       fetchChainIdFromNetworkId: true,
     );
     log("Transaction : $result");
+
     await createEventFirebase(event);
     await Future.delayed(const Duration(seconds: 20));
     final currentEventId = (await ethClient.call(
@@ -130,4 +131,44 @@ class BlockChain {
 
     return (result.first as BigInt).toInt();
   }
+
+  Future<List<dynamic>> query(String functioName, List<dynamic> args) async {
+    final contract = await loadContract();
+    final ethFunction = contract.function(functioName);
+    final result = await ethClient!
+        .call(contract: contract, function: ethFunction, params: args);
+    return result;
+  }
+
+  Future<DeployedContract> loadContract() async {
+    final String abiCode = await rootBundle.loadString('assets/json/abi.json');
+    final contract = DeployedContract(
+      ContractAbi.fromJson(abiCode, 'EventTicketing'),
+      EthereumAddress.fromHex(contractAddress),
+    );
+
+    return contract;
+  }
+
+  Future<void> getBalance() async {
+    // EthereumAddress address = EthereumAddress.fromHex(myAddress);
+    List<dynamic> result = await query("getBalance", []);
+    myData = result[0];
+    print(myData.toString());
+    data = true;
+  }
+
+  Future<double> getWalletBalance(String targetAddress) async {
+    try {
+      EthereumAddress address = EthereumAddress.fromHex(targetAddress);
+      EtherAmount balance = await ethClient.getBalance(address);
+      log('Balance: ${balance.getValueInUnit(EtherUnit.ether)} ETH');
+      return balance.getValueInUnit(EtherUnit.ether);
+    } catch (e) {
+      log('Error getting balance: $e');
+      return -1;
+    }
+  }
+
+  var myData;
 }
