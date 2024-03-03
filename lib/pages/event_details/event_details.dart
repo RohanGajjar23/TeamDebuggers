@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eventapp/model/event_model.dart';
+import 'package:eventapp/pages/event_details/components/quantity_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -49,9 +50,9 @@ class _EventDetailsState extends State<EventDetails> {
           ),
           SingleChildScrollView(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     // Hero section
                     Row(
@@ -139,7 +140,7 @@ class _EventDetailsState extends State<EventDetails> {
                                                 Get.size.shortestSide / 30,
                                             fontWeight: FontWeight.w500)),
                                 TextSpan(
-                                    text: "Event Date: \n",
+                                    text: "Event Start Date: \n",
                                     style: Get.theme.textTheme.bodyLarge!
                                         .copyWith(
                                             color:
@@ -157,13 +158,70 @@ class _EventDetailsState extends State<EventDetails> {
                                             fontSize:
                                                 Get.size.shortestSide / 30,
                                             fontWeight: FontWeight.w200)),
+                                TextSpan(
+                                    text: "Event End Date: \n",
+                                    style: Get.theme.textTheme.bodyLarge!
+                                        .copyWith(
+                                            color:
+                                                Get.theme.colorScheme.tertiary,
+                                            fontSize:
+                                                Get.size.shortestSide / 30,
+                                            fontWeight: FontWeight.w700)),
+                                TextSpan(
+                                    text:
+                                        "${formatDateFromMilliseconds(widget.event.endDate)}\n",
+                                    style: Get.theme.textTheme.bodyLarge!
+                                        .copyWith(
+                                            color: Get.theme.colorScheme
+                                                .primaryContainer,
+                                            fontSize:
+                                                Get.size.shortestSide / 30,
+                                            fontWeight: FontWeight.w200)),
                               ]),
                         ),
                       ],
                     ),
                     const SizedBox(height: 16),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Column(
+                          children: [
+                            Text("Ticket Available:",
+                                style: Get.theme.textTheme.bodyLarge!.copyWith(
+                                    color: Get.theme.colorScheme.tertiary,
+                                    fontSize: Get.size.shortestSide / 20,
+                                    fontWeight: FontWeight.bold)),
+                            Text(
+                                (widget.event.totalTickets -
+                                        widget.event.ticketSold)
+                                    .toString(),
+                                style: Get.theme.textTheme.bodyLarge!.copyWith(
+                                    color:
+                                        Get.theme.colorScheme.primaryContainer,
+                                    fontSize: Get.size.shortestSide / 20,
+                                    fontWeight: FontWeight.bold)),
+                          ],
+                        ),
+                        const SizedBox(width: 8),
+                        Column(
+                          children: [
+                            Text("Ticket Price:",
+                                style: Get.theme.textTheme.bodyLarge!.copyWith(
+                                    color: Get.theme.colorScheme.tertiary,
+                                    fontSize: Get.size.shortestSide / 20,
+                                    fontWeight: FontWeight.w200)),
+                            Text("${widget.event.price} eth",
+                                style: Get.theme.textTheme.bodyLarge!.copyWith(
+                                    color:
+                                        Get.theme.colorScheme.primaryContainer,
+                                    fontSize: Get.size.shortestSide / 20,
+                                    fontWeight: FontWeight.w200)),
+                          ],
+                        ),
+                      ],
+                    ),
                     // Buttons
-
                     const Divider(),
                     // About the Venue
                     Padding(
@@ -186,51 +244,68 @@ class _EventDetailsState extends State<EventDetails> {
                       ),
                     ),
                     const Divider(),
+                    SizedBox(
+                      height: Get.size.longestSide / 40,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          Text('Location of the Event',
+                              style: Get.theme.textTheme.bodyLarge!.copyWith(
+                                  color: Get.theme.colorScheme.tertiary,
+                                  fontSize: Get.size.shortestSide / 15,
+                                  fontWeight: FontWeight.bold)),
+                          const SizedBox(height: 8),
+                          Text(widget.event.location,
+                              style: Get.theme.textTheme.bodyLarge!.copyWith(
+                                  color: Get.theme.colorScheme.tertiary,
+                                  fontSize: Get.size.shortestSide / 20,
+                                  fontWeight: FontWeight.w200)),
+                        ],
+                      ),
+                    ),
+                    const Divider(),
+                    SizedBox(
+                      height: Get.size.longestSide / 40,
+                    ),
                     // Related Events
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
+                        Column(
+                          children: [
+                            Text("Ticket Quantity:",
+                                style: Get.theme.textTheme.bodyLarge!.copyWith(
+                                    color: Get.theme.colorScheme.tertiary,
+                                    fontSize: Get.size.shortestSide / 20,
+                                    fontWeight: FontWeight.w200)),
+                            const SizedBox(
+                              height: 8,
+                            ),
+                            const QuantityButton(),
+                          ],
+                        ),
+                        const SizedBox(width: 8),
                         ElevatedButton(
                           onPressed: () {},
                           style: ElevatedButton.styleFrom(
                             elevation: 10,
                             fixedSize: Size(Get.size.shortestSide / 3,
-                                Get.size.longestSide / 25),
+                                Get.size.longestSide / 17),
                             foregroundColor: Colors.white,
-                            backgroundColor: Get.theme.colorScheme.background
+                            backgroundColor: Get
+                                .theme.colorScheme.primaryContainer
                                 .withOpacity(0.8),
                           ),
-                          child: const Text('Interested'),
+                          child: const Text('Buy Ticket'),
                         ),
-                        const SizedBox(width: 8),
                       ],
                     ),
                   ],
-                ),
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    elevation: 10,
-                    fixedSize: Size(
-                        Get.size.shortestSide / 3, Get.size.longestSide / 25),
-                    foregroundColor: Colors.white,
-                    backgroundColor:
-                        Get.theme.colorScheme.background.withOpacity(0.8),
-                  ),
-                  child: const Text('Buy Ticket'),
-                ),
-                const Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text('Related Events',
-                          style: TextStyle(
-                              fontSize: 22, fontWeight: FontWeight.bold)),
-                      SizedBox(height: 8),
-                      // List of related events would be here
-                    ],
-                  ),
                 ),
               ],
             ),
