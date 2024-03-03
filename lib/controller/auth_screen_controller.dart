@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eventapp/model/user_data.dart';
+import 'package:eventapp/pages/home/dashboard.dart';
 import 'package:eventapp/services/authapi/auth_api.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -11,23 +12,59 @@ import 'package:intl/intl.dart';
 enum UserRole { organizer, user }
 
 class AuthScreenController extends GetxController {
-  Rx<ScrollController> scrollController = ScrollController().obs;
   Rx<TextEditingController> dateEditingController = TextEditingController().obs;
   Rx<TextEditingController> nameEditingController = TextEditingController().obs;
   Rx<TextEditingController> pubEditingController = TextEditingController().obs;
   Rx<TextEditingController> priEditingController = TextEditingController().obs;
+  Rx<PageController> pageController =
+      PageController(viewportFraction: 0.8, initialPage: 0, keepPage: true).obs;
   Rx<UserRole> selectedRole = UserRole.user.obs;
   Rx<String> dob = "".obs;
   Rx<bool> isLoading = false.obs;
   Rx<bool> showPubKey = true.obs;
   Rx<bool> showPriKey = true.obs;
 
+  Future<void> checkEveryThing() async {
+    if (AuthApi.firebaseAuth.currentUser != null &&
+        AuthApi.firebaseAuth.currentUser!.uid != "") {
+      if (await checkuserExisted(AuthApi.firebaseAuth.currentUser!.uid)) {
+        if (await checkKeyEntered(AuthApi.firebaseAuth.currentUser!.uid)) {
+          Get.offUntil(
+              GetPageRoute(
+                  page: () => const DashBoard(),
+                  transition: Transition.rightToLeftWithFade),
+              (route) => false);
+          return;
+        }
+        pageController.update((val) {
+          val!.animateToPage(2,
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.decelerate);
+        });
+        return;
+      }
+      pageController.update((val) {
+        val!.animateToPage(1,
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.decelerate);
+      });
+      nameEditingController.update((val) async {
+        val!.text = await AuthApi.getUserName();
+      });
+      return;
+    }
+    pageController.update((val) {
+      val!.animateToPage(0,
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.decelerate);
+    });
+    return;
+  }
+
   @override
   void dispose() {
     super.dispose();
-    scrollController.update((val) {
-      val!.dispose();
-    });
+    pageController.value.dispose();
   }
 
   Widget showGoogleImage() {
@@ -74,6 +111,7 @@ class AuthScreenController extends GetxController {
     update();
 
     UserCredential? user = await AuthApi.signInWithGoogle();
+
     if (user == null) {
       isLoading(false);
       update();
@@ -86,15 +124,23 @@ class AuthScreenController extends GetxController {
       log("Existed");
       isLoading(false);
       update();
-      scrollController.update((val) {
-        val!.animateTo((Get.size.longestSide / 1.25) * 2,
+      if (await checkKeyEntered(user.user!.uid)) {
+        Get.offUntil(
+            GetPageRoute(
+                page: () => const DashBoard(),
+                transition: Transition.rightToLeftWithFade),
+            (route) => false);
+        return;
+      }
+      pageController.update((val) {
+        val!.animateToPage(2,
             duration: const Duration(milliseconds: 500),
             curve: Curves.decelerate);
       });
       return;
     } else {
-      scrollController.update((val) {
-        val!.animateTo(Get.size.longestSide / 1.25,
+      pageController.update((val) {
+        val!.animateToPage(1,
             duration: const Duration(milliseconds: 500),
             curve: Curves.decelerate);
       });
@@ -102,7 +148,6 @@ class AuthScreenController extends GetxController {
       log(await AuthApi.getUserName());
       log(await AuthApi.getUserEmail());
       log(await AuthApi.getProfilePic());
-
       nameEditingController.update((val) async {
         val!.text = await AuthApi.getUserName();
       });
@@ -144,6 +189,22 @@ class AuthScreenController extends GetxController {
     return false;
   }
 
+  Future<bool> checkKeyEntered(String uid) async {
+    log("Keychecking");
+
+    final existense =
+        await AuthApi.firestore.collection("userData").doc(uid).get();
+    final data = UserData.fromMap(existense.data()!);
+    if (existense.exists &&
+        existense.data() != null &&
+        data.privateId != "" &&
+        data.publicId != "") {
+      log("Key Exists");
+      return true;
+    }
+    return false;
+  }
+
   Future<void> updateProfileKeys() async {
     isLoading(true);
     update();
@@ -158,7 +219,16 @@ class AuthScreenController extends GetxController {
       await AuthApi.firestore
           .collection("userData")
           .doc(AuthApi.firebaseAuth.currentUser!.uid)
-          .set(data.toMap());
+          .set(data.toMap())
+          .then((value) {
+        // Get.offUntil(, (route) => false)
+        Get.offUntil(
+            GetPageRoute(
+                page: () => const DashBoard(),
+                transition: Transition.rightToLeftWithFade),
+            (route) => false);
+      });
+
       log("updated");
     } else {
       //show snackbar of something went wrong
@@ -194,8 +264,13 @@ class AuthScreenController extends GetxController {
           .doc(uid)
           .set(userData.toMap())
           .then((value) {
-        scrollController.update((val) {
-          val!.animateTo(Get.size.longestSide / 1.25,
+        // scrollController.update((val) {
+        //   val!.animateTo(Get.size.longestSide / 1.25,
+        //       duration: const Duration(milliseconds: 500),
+        //       curve: Curves.decelerate);
+        // });
+        pageController.update((val) {
+          val!.animateToPage(1,
               duration: const Duration(milliseconds: 500),
               curve: Curves.decelerate);
         });
@@ -204,8 +279,13 @@ class AuthScreenController extends GetxController {
 
     isLoading(false);
     update();
-    scrollController.update((val) {
-      val!.animateTo((Get.size.longestSide / 1.25) * 2,
+    // scrollController.update((val) {
+    //   val!.animateTo((Get.size.longestSide / 1.25) * 2,
+    //       duration: const Duration(milliseconds: 500),
+    //       curve: Curves.decelerate);
+    // });
+    pageController.update((val) {
+      val!.animateToPage(2,
           duration: const Duration(milliseconds: 500),
           curve: Curves.decelerate);
     });

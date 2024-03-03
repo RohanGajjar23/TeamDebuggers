@@ -16,68 +16,72 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen> {
   UserRole? selectedRole = UserRole.user;
 
-  final AuthScreenController controller = Get.put(AuthScreenController());
+  final AuthScreenController controller = Get.find<AuthScreenController>();
+
+  @override
+  void initState() {
+    super.initState();
+    controller.checkEveryThing();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => GestureDetector(
-        onTap: () => FocusScope.of(context).unfocus(),
-        child: Stack(
-          children: [
-            Scaffold(
-              body: Container(
-                width: Get.size.shortestSide,
-                height: Get.size.longestSide,
-                decoration: BoxDecoration(
-                  gradient: RadialGradient(
-                    radius: 1.3,
-                    // transform: GradientRotation(0),
-                    center: Alignment.bottomCenter,
-                    // begin: Alignment.topLeft,
-                    // end: Alignment.bottomRight,
-                    colors: [
-                      // Get.theme.colorScheme.background,
-                      // Get.theme.colorScheme.background,
-                      Get.theme.colorScheme.secondary,
-                      Get.theme.colorScheme.secondary,
-                      Get.theme.colorScheme.secondary,
-                      Get.theme.colorScheme.background,
-                      // Get.theme.colorScheme.background,
-                    ],
+    return GetBuilder(
+        init: controller,
+        builder: (context) {
+          return GestureDetector(
+            onTap: () => FocusScope.of(Get.context!).unfocus(),
+            child: Stack(
+              children: [
+                Scaffold(
+                  body: Container(
+                    width: Get.size.shortestSide,
+                    height: Get.size.longestSide,
+                    padding: EdgeInsets.symmetric(
+                        horizontal: Get.size.shortestSide / 20),
+                    decoration: BoxDecoration(
+                      gradient: RadialGradient(
+                        radius: 1.3,
+                        // transform: GradientRotation(0),
+                        center: Alignment.bottomCenter,
+                        // begin: Alignment.topLeft,
+                        // end: Alignment.bottomRight,
+                        colors: [
+                          // Get.theme.colorScheme.background,
+                          // Get.theme.colorScheme.background,
+                          Get.theme.colorScheme.secondary,
+                          Get.theme.colorScheme.secondary,
+                          Get.theme.colorScheme.secondary,
+                          Get.theme.colorScheme.background,
+                          // Get.theme.colorScheme.background,
+                        ],
+                      ),
+                    ),
+                    child: PageView(
+                      controller: controller.pageController.value,
+                      scrollDirection: Axis.vertical,
+                      physics: const NeverScrollableScrollPhysics(),
+                      children: const [
+                        GoogleGithubWidget(),
+                        ProfileUpdateWidget(),
+                        WalletConnectWidget(),
+                      ],
+                    ),
                   ),
                 ),
-                child: SingleChildScrollView(
-                  controller: controller.scrollController.value,
-                  physics: const NeverScrollableScrollPhysics(),
-                  child: Column(
-                    // mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(height: Get.size.longestSide / 5),
-                      const GoogleGithubWidget(),
-                      SizedBox(height: Get.size.longestSide / 7),
-                      const ProfileUpdateWidget(),
-                      SizedBox(height: Get.size.longestSide / 7),
-                      const WalletConnectWidget(),
-                      SizedBox(height: Get.size.longestSide / 7),
-                    ],
-                  ),
-                ),
-              ),
+                if (controller.isLoading.value)
+                  Container(
+                    width: Get.size.shortestSide,
+                    height: Get.size.longestSide,
+                    color: Colors.black54, //Get.theme.colorScheme.background,
+                    child: Center(
+                      child: LoadingAnimationWidget.fourRotatingDots(
+                          color: Get.theme.colorScheme.tertiary, size: 70),
+                    ),
+                  )
+              ],
             ),
-            if (controller.isLoading.value)
-              Container(
-                width: Get.size.shortestSide,
-                height: Get.size.longestSide,
-                color: Colors.black54, //Get.theme.colorScheme.background,
-                child: Center(
-                  child: LoadingAnimationWidget.fourRotatingDots(
-                      color: Get.theme.colorScheme.tertiary, size: 70),
-                ),
-              )
-          ],
-        ),
-      ),
-    );
+          );
+        });
   }
 }

@@ -1,12 +1,9 @@
 import 'package:eventapp/firebase_options.dart';
-import 'package:eventapp/pages/home/dashboard.dart';
+import 'package:eventapp/pages/index.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:eventapp/pages/auth/auth_screen.dart';
 import 'package:eventapp/theme/color_pallet.dart';
 import 'package:get/get.dart';
-
-import 'pages/auth/components/msg_box.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,8 +19,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      theme: CustomThemes.lightTheme,
-      home: const AuthScreen(),
+      theme: CustomThemes.darktheme,
+      debugShowCheckedModeBanner: false,
+      home: const IndexPage(),
     );
   }
 }
