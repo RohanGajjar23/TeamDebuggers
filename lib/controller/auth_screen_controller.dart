@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eventapp/model/user_data.dart';
+import 'package:eventapp/pages/auth/auth_screen.dart';
 import 'package:eventapp/pages/home/dashboard.dart';
 import 'package:eventapp/services/authapi/auth_api.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -132,6 +133,8 @@ class AuthScreenController extends GetxController {
             (route) => false);
         return;
       }
+      isLoading(false);
+      update();
       pageController.update((val) {
         val!.animateToPage(2,
             duration: const Duration(milliseconds: 500),
@@ -155,6 +158,7 @@ class AuthScreenController extends GetxController {
 
     isLoading(false);
     update();
+    return;
   }
 
   Future<void> selectDate(BuildContext context) async {
@@ -177,7 +181,15 @@ class AuthScreenController extends GetxController {
   }
 
   Future<void> signOut() async {
-    await AuthApi.signOutGoogle();
+    isLoading(true);
+    update();
+    await AuthApi.signOutGoogle().then((value) => Get.offUntil(
+        GetPageRoute(
+            page: () => const AuthScreen(), transition: Transition.fadeIn),
+        (route) => false));
+
+    isLoading(false);
+    update();
   }
 
   Future<bool> checkuserExisted(String uid) async {
@@ -222,6 +234,8 @@ class AuthScreenController extends GetxController {
           .set(data.toMap())
           .then((value) {
         // Get.offUntil(, (route) => false)
+        isLoading(false);
+        update();
         Get.offUntil(
             GetPageRoute(
                 page: () => const DashBoard(),
@@ -264,11 +278,8 @@ class AuthScreenController extends GetxController {
           .doc(uid)
           .set(userData.toMap())
           .then((value) {
-        // scrollController.update((val) {
-        //   val!.animateTo(Get.size.longestSide / 1.25,
-        //       duration: const Duration(milliseconds: 500),
-        //       curve: Curves.decelerate);
-        // });
+        isLoading(false);
+        update();
         pageController.update((val) {
           val!.animateToPage(1,
               duration: const Duration(milliseconds: 500),
@@ -279,11 +290,6 @@ class AuthScreenController extends GetxController {
 
     isLoading(false);
     update();
-    // scrollController.update((val) {
-    //   val!.animateTo((Get.size.longestSide / 1.25) * 2,
-    //       duration: const Duration(milliseconds: 500),
-    //       curve: Curves.decelerate);
-    // });
     pageController.update((val) {
       val!.animateToPage(2,
           duration: const Duration(milliseconds: 500),

@@ -33,13 +33,13 @@ class BlockChain {
     }
   }
 
-  void initBlockChain() {
+  Future<void> initBlockChain() async {
     httpClient = Client();
     ethClient = Web3Client(
         "https://sepolia.infura.io/v3/f7971deecbb34099b6e3b9b65c5e50f0",
         httpClient);
     log("I got http and eth");
-    getKeys();
+    await getKeys();
   }
 
   Future<void> createEventFirebase(EventModel event) async {
@@ -150,8 +150,8 @@ class BlockChain {
   Future<List<dynamic>> query(String functioName, List<dynamic> args) async {
     final contract = await loadContract();
     final ethFunction = contract.function(functioName);
-    final result = await ethClient!
-        .call(contract: contract, function: ethFunction, params: args);
+    final result = await ethClient.call(
+        contract: contract, function: ethFunction, params: args);
     return result;
   }
 
@@ -169,7 +169,7 @@ class BlockChain {
     // EthereumAddress address = EthereumAddress.fromHex(myAddress);
     List<dynamic> result = await query("getBalance", []);
     myData = result[0];
-    print(myData.toString());
+    log(myData.toString());
     data = true;
   }
 
@@ -185,5 +185,6 @@ class BlockChain {
     }
   }
 
+  // ignore: prefer_typing_uninitialized_variables
   var myData;
 }
