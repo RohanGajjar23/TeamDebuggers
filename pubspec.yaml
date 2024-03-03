@@ -50,6 +50,9 @@ dependencies:
   cached_network_image: ^3.3.1
   loading_animation_widget: ^1.2.0+4
   google_nav_bar: ^5.0.6
+  scroll_snap_list: ^0.9.1
+  flutter_staggered_animations: ^1.1.1
+  web3dart: ^2.7.1
 
 dev_dependencies:
   flutter_test:
@@ -79,6 +82,8 @@ flutter:
     - assets/images/git.png
     - assets/images/p3.png
     - assets/images/Metamask-logo.png
+    - assets/images/event1.jpg
+    - assets/json/abi.json
     
   #   - images/a_dot_ham.jpeg
 
