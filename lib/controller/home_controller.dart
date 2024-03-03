@@ -7,6 +7,7 @@ import 'package:eventapp/pages/home/organize/organize_event.dart';
 import 'package:eventapp/pages/home/profile/profile.dart';
 import 'package:eventapp/pages/home/search/search_events.dart';
 import 'package:eventapp/services/blockchain/blockchain_functions.dart';
+import 'package:eventapp/services/etherscan/etherscan_api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -58,5 +59,10 @@ class HomeController extends GetxController {
       Get.snackbar("Add Some Quantity", "",
           snackPosition: SnackPosition.BOTTOM);
     }
+  }
+
+  Future<bool> checkTransactionLoading(String txhash) async {
+    final data = await EtherScanApi.getTransactionReceiptStatus(txhash);
+    return data['result']['status'] == "" ? true : false;
   }
 }
