@@ -3,6 +3,8 @@ import 'package:eventapp/controller/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../services/authapi/auth_api.dart';
+
 class Profile extends StatefulWidget {
   const Profile({super.key});
 
@@ -239,32 +241,6 @@ class _ProfileState extends State<Profile> {
                               SizedBox(
                                 height: Get.size.longestSide / 70,
                               ),
-<<<<<<< Updated upstream
-                              ListTile(
-                                title: Container(),
-                                subtitle: Padding(
-                                  padding: const EdgeInsets.only(bottom: 4.64),
-                                  child: Text(
-                                    "16-11-2003",
-                                    style: TextStyle(
-                                      color: Get.theme.colorScheme.tertiary,
-                                      fontSize: Get.size.longestSide / 48,
-                                    ),
-                                  ),
-                                ),
-                                leading: Text(
-                                  "Birth Date :",
-                                  style: TextStyle(
-                                    color: Get.theme.colorScheme.tertiary,
-                                    fontSize: Get.size.longestSide / 48,
-                                  ),
-                                ), // You can replace this with an appropriate icon
-                              ),
-                              SizedBox(
-                                height: Get.size.longestSide / 70,
-                              ),
-=======
->>>>>>> Stashed changes
                               ListTile(
                                 title: Container(),
                                 subtitle: Text(
