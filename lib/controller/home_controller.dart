@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:eventapp/pages/home/community/community_connect.dart';
 import 'package:eventapp/pages/home/events/events.dart';
 import 'package:eventapp/pages/home/events/widgets/events_list_views.dart';
@@ -19,6 +21,8 @@ class HomeController extends GetxController {
   ]);
   final BlockChain blockChain = BlockChain();
 
+  var quantity = (01).obs;
+
   void changePage(int index) {
     selectedPage(index);
     update();
@@ -28,5 +32,31 @@ class HomeController extends GetxController {
   void onInit() {
     super.onInit();
     blockChain.initBlockChain();
+  }
+
+  void incrementQuantity() {
+    if (quantity.value < 9) {
+      quantity(quantity.value + 1);
+      log("qunatity: ${quantity.value}");
+      update();
+    } else {
+      Get.focusScope!.unfocus();
+      Get.snackbar("Maximum Quantity Reached ", "Per Time",
+          snackPosition: SnackPosition.BOTTOM);
+    }
+  }
+
+  void decrementQuantity() {
+    if (quantity.value > 0) {
+      quantity(quantity.value - 1);
+      log("qunatity: ${quantity.value}");
+
+      update();
+    } else {
+      Get.focusScope!.unfocus();
+
+      Get.snackbar("Add Some Quantity", "",
+          snackPosition: SnackPosition.BOTTOM);
+    }
   }
 }
