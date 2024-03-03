@@ -283,7 +283,7 @@ class _EventDetailsState extends State<EventDetails> {
                                     color: Get.theme.colorScheme.tertiary,
                                     fontSize: Get.size.shortestSide / 20,
                                     fontWeight: FontWeight.w200)),
-                            SizedBox(
+                            const SizedBox(
                               height: 8,
                             ),
                             const QuantityButton(),
