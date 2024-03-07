@@ -54,7 +54,8 @@ class EventModel {
       'totalTickets': event.totalTickets,
       'photoUrl': event.photoUrl,
       'organizer': event.organizer,
-      'eventType': event.eventType.index, // Storing enum index
+      'eventType':
+          event.eventType.toString().split('.').last, // Storing enum index
     });
   }
 
